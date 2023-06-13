@@ -3,11 +3,30 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {PrivyProvider} from '@privy-io/react-auth';
+ 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
+  <React.StrictMode> 
+    <PrivyProvider
+     appId={process.env.REACT_APP_PRIVY_APP_ID}
+     onSuccess={(user) => console.log(`User ${user.id} logged in!`)}
+     config={{
+       loginMethods: ['wallet', 'email', 'sms', 'google', 'twitter', 'discord', 'github', 'apple'],
+       appearance: {
+         theme: 'light',
+         accentColor: '#676FFF',
+         logo: 'https://www.trustified.xyz/images/logo.png',
+         showWalletLoginFirst: true
+       }
+     }}
+    >
+    <ToastContainer/>
+     <App />
+     </PrivyProvider>
   </React.StrictMode>
 );
 
